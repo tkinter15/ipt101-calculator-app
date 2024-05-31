@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULATOR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        #calculator {
+            width: 380px;
+            margin: 50px auto;
+            background-color: #EBE3D5;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        #top-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        #result {
+            width: calc(100% - 160px);
+            height: 60px;
+            font-size: 45px;
+            text-align: right;
+            border: none;
+            outline: none;
+            background-color: #fff3f3;
+            color: #776B5D;
+            margin-right: 10px;
+            border-radius: 10px;
+            padding-right: 10px;
+        }
+
+        .num-btn {
+            width: 74px;
+            height: 74px;
+            font-size: 28px;
+            margin: 5px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: #B0A695;
+            color: #FFFFFF;
+            transition: background-color 0.3s ease;
+        }
+
+        .num-btn:hover {
+            background-color: #ECE3CE;
+        }
+
+        #btn-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            padding: 10px;
+            justify-content: center;
+        }
+
+        #btn-container button[value="="] {
+            grid-column: 1 / span 2;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <div id="top-container">
+            <input type="text" id="result" disabled>
+            <input type="button" value="C" onclick="clearInput()" class="num-btn">
+            <input type="button" value="DEL" onclick="deleteLastCharacter()" class="num-btn">
+        </div>
+        <div id="btn-container">
+            <input type="button" value="7" onclick="appendNumber(7)" class="num-btn">
+            <input type="button" value="8" onclick="appendNumber(8)" class="num-btn">
+            <input type="button" value="9" onclick="appendNumber(9)" class="num-btn">
+            <input type="button" value="+" onclick="appendOperator('+')" class="num-btn">
+            <input type="button" value="4" onclick="appendNumber(4)" class="num-btn">
+            <input type="button" value="5" onclick="appendNumber(5)" class="num-btn">
+            <input type="button" value="6" onclick="appendNumber(6)" class="num-btn">
+            <input type="button" value="÷" onclick="appendOperator('/')" class="num-btn">
+            <input type="button" value="1" onclick="appendNumber(1)" class="num-btn">
+            <input type="button" value="2" onclick="appendNumber(2)" class="num-btn">
+            <input type="button" value="3" onclick="appendNumber(3)" class="num-btn">
+            <input type="button" value="×" onclick="appendOperator('*')" class="num-btn">
+            <input type="button" value="-" onclick="appendOperator('-')" class="num-btn">
+            <input type="button" value="0" onclick="appendNumber(0)" class="num-btn">
+            <input type="button" value="." onclick="appendNumber('.')" class="num-btn">
+            <input type="button" value="=" onclick="calculate()" class="num-btn" style="grid-column: 0 / span 2;">
+        </div>
+    </div>
+
+    <script>
+        let currentInput = '';
+
+        function clearInput() {
+            currentInput = '';
+            document.getElementById('result').value = '';
+        }
+
+        function deleteLastCharacter() {
+            currentInput = currentInput.slice(0, -1);
+            document.getElementById('result').value = currentInput;
+        }
+
+        function appendNumber(number) {
+            currentInput += number;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function appendOperator(operator) {
+            currentInput += operator;
+            document.getElementById('result').value = currentInput;
+        }
+
+        function calculate() {
+            try {
+                const result = eval(currentInput);
+                if (!isNaN(result)) {
+                    document.getElementById('result').value = result;
+                    currentInput = result.toString();
+                } else {
+                    document.getElementById('result').value = 'Error';
+                    currentInput = '';
+                }
+            } catch (error) {
+                document.getElementById('result').value = 'Error';
+                currentInput = '';
+            }
+        }
+    </script>
+</body>
+</html>
